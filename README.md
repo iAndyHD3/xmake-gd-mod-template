@@ -6,6 +6,9 @@ GD mod template using the xmake build system, along with an automated copy DLL a
 
 [xmake](https://xmake.io/) is a lightweight, cross-platform build utility based on Lua that uses `xmake.lua` to maintain project builds with a simple and readable syntax. It is very lightweight and has no dependencies due to the integration of the Lua runtime.
 
+![](https://github.com/xmake-io/xmake-docs/raw/master/assets/img/index/xmake-basic-render.gif)
+
+
 ## Why xmake?
 Compared to CMake, I find xmake much simpler to use when it comes to getting started, compiling, and running projects. As a result, I created this template to practice and learn.
 ## Windows Setup
@@ -44,7 +47,7 @@ in the [future](https://github.com/xmake-io/xmake/pull/3496), `xmake run` will w
 
 ## xmake'd libraries
 
-check out the `xmake.lua` of [matdash](), [cocos headers]() and [gd.h]()
+check out the `xmake.lua` of [the main project](https://github.com/iAndyHD3/xmake-gd-mod-template/blob/main/xmake.lua) [matdash](https://github.com/iAndyHD3/xmake-gd-mod-template/blob/main/libs/mat-dash/xmake.lua), [cocos headers](https://github.com/iAndyHD3/xmake-gd-mod-template/blob/main/libs/cocos-headers/xmake.lua) and [gd.h](https://github.com/iAndyHD3/xmake-gd-mod-template/blob/main/libs/gd.h/xmake.lua)
 
 ## xrepo
 
