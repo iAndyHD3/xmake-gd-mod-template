@@ -1,0 +1,5 @@
+{
+    cppath = [[C:\Users\marca\Desktop\juegos\Geometry Dash\adaf-dll]],
+    gdpath = [[C:\Users\marca\Desktop\juegos\Geometry Dash]],
+    gdexec = "GeometryDash.exe",
+}
