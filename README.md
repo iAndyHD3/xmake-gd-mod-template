@@ -1,6 +1,6 @@
 # xmake GD Mod Template
 
-This Github repository provides a ready-to-use GD mod template using the xmake build system, along with an automated copy DLL and run command that allows for quick testing of modifications.
+GD mod template using the xmake build system, along with an automated copy DLL and run command that allows for quick testing of modifications.
 
 ## About xmake
 
@@ -18,7 +18,7 @@ To get started with this template, download and install xmake using the installe
 Once xmake is installed, clone this repository and change to the directory using the following commands:
 
 ```
-git clone https://github.com/<your_username>/gdmod.git
+git clone https://github.com/iAndyHD3/xmake-gd-mod-template gdmod
 cd gdmod
 ```
 
