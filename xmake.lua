@@ -19,6 +19,7 @@ add_rules("mode.releasedbg")
 set_allowedarchs("windows|x86") --allow only windows x86
 set_defaultarchs("windows|x86") --set default windows x86
 set_allowedmodes("release", "releasedbg") --allow only Release and RelWithDebInfo
+set_defaultmode("release");
 set_languages("c++20") --set c++20
 
 

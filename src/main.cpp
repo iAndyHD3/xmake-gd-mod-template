@@ -1,16 +1,6 @@
-#include <matdash.hpp>
-
-// defines add_hook to use minhook
-#include <matdash/minhook.hpp>
-
-// lets you use mod_main
+#include "includes.h"
 #include <matdash/boilerplate.hpp>
-
-#include <fmt/format.h>
-#include <gd.h>
-
-using namespace gd;
-using namespace cocos2d;
+#include "StartLayer.h"
 
 #define USE_WIN32_CONSOLE
 
@@ -31,26 +21,22 @@ public:
 };
 	
 void MenuLayer_onNewgrounds(MenuLayer* self, CCObject* sender) {
-	fmt::print("cool\n");
-	matdash::orig<&MenuLayer_onNewgrounds>(self, sender);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, StartLayer::scene()));
 }
 bool GJDropDownLayer_init(GJDropDownLayer* self, const char* title, float height) {
 	return matdash::orig<&GJDropDownLayer_init>(self, "my own title", height * 0.5f);
 }
-//speedhack
-void PlayLayer_update(PlayLayer* self, float dt) {
-	matdash::orig<&PlayLayer_update>(self, dt * 0.5f);
+
+
+matdash::cc::thiscall<void> PlayLayer_update_(gd::PlayLayer* self, float dt) {
+    matdash::orig<&PlayLayer_update_>(self, dt * 0.5f);
+    return {};
 }
 
 //static cocos function
 matdash::cc::c_decl<CCLabelBMFont*> CCLabelBMFont_create(const char* text, const char* fontfile) {
 	fmt::print("creating label with text: {}\n", text);
     return matdash::orig<&CCLabelBMFont_create>(text, fontfile);
-}
-
-void PlayLayer_update_(PlayLayer* self, float dt) {
-	// another way of specifying the calling convention
-	matdash::orig<&PlayLayer_update_, matdash::Thiscall>(self, dt * 0.5f);
 }
 
 void mod_main(HMODULE) {
@@ -67,10 +53,7 @@ void mod_main(HMODULE) {
 	matdash::add_hook<&MenuLayerMod::init_>(base + 0x1907b0);
 	matdash::add_hook<&MenuLayer_onNewgrounds>(base + 0x191e90);
 	matdash::add_hook<&GJDropDownLayer_init>(base + 0x113530);
-	matdash::add_hook<&PlayLayer_update>(base + 0x2029c0);
-
-	// another way of specifying the calling convention
-	matdash::add_hook<&PlayLayer_update_, matdash::Thiscall>(base + 0x2029c0);
+    matdash::add_hook<&PlayLayer_update_, matdash::Thiscall>(gd::base + 0x2029c0);
 	
 	//hook cocos function
 	static auto cocos_addr = [](const char* symbol) -> auto {
