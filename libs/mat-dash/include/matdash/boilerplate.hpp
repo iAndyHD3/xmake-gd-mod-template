@@ -1,4 +1,3 @@
-#pragma once
 #include <Windows.h>
 
 void mod_main(HMODULE);
