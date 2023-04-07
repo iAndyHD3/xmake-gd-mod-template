@@ -41,12 +41,14 @@ target("gdmod") --dll name and target name
 	set_kind("shared")
 	add_files("src/*.cpp")
 	add_packages("fmt")
-	add_deps("minhook")
 	add_deps("cocos-headers")
 	add_deps("mat-dash")
 	add_deps("gd.h")
 	set_rundir("/bin")
 	
+	--add minhook manually here since it doesnt seem to work when added with target
+	add_includedirs("libs/minhook/include")
+	add_files("libs/minhook/src/**.c")
 	
 	--this will run when xmake run gdmod is called
 	on_run(function (target)
