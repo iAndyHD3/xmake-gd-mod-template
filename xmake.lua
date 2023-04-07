@@ -32,7 +32,6 @@ for i = 1, #options_table do
 	option_end()
 end
 
-add_requires("minhook")
 add_requires("fmt")
 
 includes("**/xmake.lua") -- recursively add files through pattern matching
@@ -41,8 +40,8 @@ target("gdmod") --dll name and target name
 	set_default(true)
 	set_kind("shared")
 	add_files("src/*.cpp")
-	add_packages("minhook")
 	add_packages("fmt")
+	add_deps("minhook")
 	add_deps("cocos-headers")
 	add_deps("mat-dash")
 	add_deps("gd.h")
@@ -56,18 +55,44 @@ target("gdmod") --dll name and target name
 		
 		--print("cppath: $(cppath) | gdpath: $(gdpath) | gdexec: $(gdexec)")
 		
+		--copy dll
 		if notempty("$(cppath)") then
-			cprint(string.format("${green}%s${clear} -> ${green}%s${clear}", target:targetfile(), "$(cppath)"))
-			os.cp(target:targetfile(), "$(cppath)")
+			if os.exists("$(cppath)") then
+				cprint(string.format("${green}%s${clear} -> ${green}%s${clear}", target:targetfile(), "$(cppath)"))
+				os.cp(target:targetfile(), "$(cppath)")
+			else
+				cprint("${red}error:${clear} the copy path (cppath) does not exist, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+				os.exit()
+			end
+		else
+			cprint("${red}error:${clear} the copy path (cppath) is not set, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+			os.exit()
 		end
-
-		if notempty("$(gdexec") and notempty("$(gdpath") then
-			local scriptdir = os.scriptdir()
-			os.cd("$(gdpath)")
-			cprint("${green}$(gdpath)\\$(gdexec)${clear} -> CTRL+C or close the game to exit")
-			os.run("$(gdexec)")
+		
+		--run game
+		if notempty("$(gdexec") then
+			if notempty("$(gdpath)") then
+				if os.isfile("$(gdpath)\\$(gdexec)") then
+					if os.exists("$(gdpath)") then
+						os.cd("$(gdpath)")
+						cprint("${green}$(gdpath)\\$(gdexec)${clear} -> CTRL+C or close the game to exit")
+						os.run("$(gdexec)")
+					else
+						cprint("${red}error:${clear} the geometry dash path (gdpath) does not exist, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+						os.exit()
+					end
+				else
+					cprint("${red}error:${clear} the geometry dash executable path (gdexec) does not exist, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+					os.exit()
+				end
+			else
+				cprint("${red}error:${clear} the geometry dash path (gdpath) is not set, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+				os.exit()
+			end
+		else
+			cprint("${red}error:${clear} the geometry dash executable name (gdexec) is not set, set the paths in cfg.txt and run `xmake f --import=cfg.txt`")
+			os.exit()
 		end
-			
 	end)
 	
 target_end() --target_end() is optional
