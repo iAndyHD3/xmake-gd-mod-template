@@ -17,7 +17,7 @@ To ensure a smooth experience, xmake attempts to detect [Visual Studio Community
 ### Install xmake
 To get started with this template, download and install xmake using the installer from [Releases](https://github.com/xmake-io/xmake/releases/latest). Verify the installation by opening a console and running `xmake --version`.
 
-### Build
+## Build
 Once xmake is installed, clone this repository and change to the directory using the following commands:
 
 ```
@@ -28,22 +28,40 @@ cd gdmod
 
 Then, compile the mod using xmake by simply running `xmake`. For the first compile, use `xmake -y` to auto-accept y/n install packages.
 
-## Run Command Setup
+### Run Command Setup
 To automate the process of copying the DLL and running the mod, modify `cfg.txt` and set your own paths for the following variables:
 
 - `cppath`: the directory where the DLL will be copied to
 - `gdpath`: the directory where the Geometry Dash executable is located
 - `gdexec`: the file name of the Geometry Dash executable (usually `GeometryDash.exe`)
 
-Next, import the settings with `xmake f --import=cfg.txt`.<br>
+Next, import the settings with 
+```
+xmake f --import=cfg.txt
+```
+
 You can view the current values using `xmake f --menu` and entering `Project Configuration`.
 
-Finally, use the following command to run the mod and specify the target:
+Then you can call the run command on xmake >=2.7.8 like so
+```
+xmake run
+```
 
+If you have an older version, the target name must be specified
 ```
 xmake run gdmod
 ```
-in the [future](https://github.com/xmake-io/xmake/pull/3496), `xmake run` will work just fine, but for now the target name must be specified
+
+To compile and run at the same time use
+```
+xmake && xmake run
+```
+### Clang
+
+To build using clang, use
+```
+xmake f --toolchain=clang --import=cfg.txt
+```
 
 ## xmake'd libraries
 
